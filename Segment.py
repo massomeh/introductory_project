@@ -39,6 +39,12 @@ for segmentName, thresholdMin, thresholdMax in segmentsFromHounsfieldUnits:
     effect.setParameter("MinimumThreshold",str(thresholdMin))
     effect.setParameter("MaximumThreshold",str(thresholdMax))
     effect.self().onApply()
+    #Smothing
+    segmentEditorWidget.setActiveEffectByName("Smoothing")
+    effect = segmentEditorWidget.activeEffect()
+    effect.setParameter("SmothingMethod","Median")
+    effect.setParameter("KernelSizeMm",11)
+    effect.self().onApply()
 
 # Delete temporary segment editor
 segmentEditorWidget = None
