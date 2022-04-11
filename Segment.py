@@ -45,7 +45,13 @@ for segmentName, thresholdMin, thresholdMax in segmentsFromHounsfieldUnits:
     effect.setParameter("SmothingMethod","Median")
     effect.setParameter("KernelSizeMm",11)
     effect.self().onApply()
-
+    #
+    segmentationNode.CreateClosedSurfaceRepresentation()
+    surfaceMesh = segmentationNode.GetClosedSurfaceInternalRepresentation(addedSegmentID)    
+    writer = vtk.vtkSTLWriter()
+    writer.SetInputData(surfaceMesh)
+    writer.SetFileName("c:/tmp/SINGLE.stl")
+    writer.Update()
 # Delete temporary segment editor
 segmentEditorWidget = None
 slicer.mrmlScene.RemoveNode(segmentEditorNode)
