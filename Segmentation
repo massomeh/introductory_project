@@ -1,1 +1,26 @@
 
+#Load DICOM Data
+import SampleData
+dicomFilesDirectory = "F:/archive/data/test"  # input folder with DICOM files
+loadedNodeIDs = []  # this list will contain the list of all loaded node IDs
+import DICOMLib.DICOMUtils as utils
+import DICOMScalarVolumePlugin
+from DICOMLib import DICOMUtils
+scalarVolumeReader = DICOMScalarVolumePlugin.DICOMScalarVolumePluginClass()
+with DICOMUtils.TemporaryDICOMDatabase() as db:
+  DICOMUtils.importDicom(dicomFilesDirectory, db)
+  patientUIDs = db.patients()
+  for patientUID in patientUIDs:
+    loadedNodeIDs.extend(DICOMUtils.loadPatientByUID(patientUID))
+
+    result = utils.importDicom(dicomFilesDirectory)
+    calarVolumeReader = DICOMScalarVolumePlugin.DICOMScalarVolumePluginClass()
+    for patient in db.patients():
+        for study in db.studiesForPatient(patient):
+            for series in db.seriesForStudy(study):
+                print("looking at series " + series + " for patient " + patient)
+                files = db.filesForSeries(series)
+                loadable = scalarVolumeReader.examineForImport([files])[0]
+                scalarVolumeReader.load(loadable)
+ 
+ 
