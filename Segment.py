@@ -1,6 +1,7 @@
-#Load DICOM Data
-import SampleData
-dicomFilesDirectory = "F:/archive/data/test"  # input folder with DICOM files
+#Load DICOM Data 
+import os
+dicomFilesDirectory = input("Path to input folder with DICOM files:")   # input folder with DICOM files
+outputPath = input("Path to export and save the generated *.STL file:")
 loadedNodeIDs = []  # this list will contain the list of all loaded node IDs
 import DICOMLib.DICOMUtils as utils
 import DICOMScalarVolumePlugin
@@ -50,7 +51,7 @@ for segmentName, thresholdMin, thresholdMax in segmentsFromHounsfieldUnits:
     surfaceMesh = segmentationNode.GetClosedSurfaceInternalRepresentation(addedSegmentID)    
     writer = vtk.vtkSTLWriter()
     writer.SetInputData(surfaceMesh)
-    writer.SetFileName("c:/tmp/SINGLE.stl")
+    writer.SetFileName(os.path.join (outputPath,"SINGLE.stl"))
     writer.Update()
 # Delete temporary segment editor
 segmentEditorWidget = None
@@ -72,4 +73,4 @@ segStatLogic.showTable(resultsTableNode)
 # Export segmentation to a labelmap
 labelmapVolumeNode = slicer.mrmlScene.AddNewNodeByClass('vtkMRMLLabelMapVolumeNode')
 slicer.modules.segmentations.logic().ExportVisibleSegmentsToLabelmapNode(segmentationNode, labelmapVolumeNode, masterVolumeNode)
-slicer.util.saveNode(labelmapVolumeNode, "c:/tmp/BodyComposition-label.nrrd")
+slicer.util.saveNode(labelmapVolumeNode, os.path.join (outputPath,"Bone-label.nrrd"))
