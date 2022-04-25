@@ -1,5 +1,8 @@
 #Load DICOM Data 
+<<<<<<< HEAD
 import slicer
+=======
+>>>>>>> 8e05e2e210b0c4fbee48cfaaed5ff46903444bd6
 import os
 dicomFilesDirectory = input("Path to input folder with DICOM files:")   # input folder with DICOM files
 outputPath = input("Path to export and save the generated *.STL file:")
@@ -74,4 +77,8 @@ segStatLogic.showTable(resultsTableNode)
 # Export segmentation to a labelmap
 labelmapVolumeNode = slicer.mrmlScene.AddNewNodeByClass('vtkMRMLLabelMapVolumeNode')
 slicer.modules.segmentations.logic().ExportVisibleSegmentsToLabelmapNode(segmentationNode, labelmapVolumeNode, masterVolumeNode)
+<<<<<<< HEAD
 slicer.util.saveNode(labelmapVolumeNode, os.path.join (outputPath,"Bone-label.nrrd"))
+=======
+slicer.util.saveNode(labelmapVolumeNode, os.path.join (outputPath,"Bone-label.nrrd"))
+>>>>>>> 8e05e2e210b0c4fbee48cfaaed5ff46903444bd6
